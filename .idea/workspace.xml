@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/file2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PP2.iml" afterDir="false" />
+    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="Lots of work.  Up to HashMap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compressor.java" afterDir="false" />
     </list>
@@ -83,8 +79,16 @@
       <workItem from="1644578526437" duration="46000" />
       <workItem from="1644578582186" duration="435000" />
       <workItem from="1644579096045" duration="5000" />
-      <workItem from="1644579339059" duration="8955000" />
+      <workItem from="1644579339059" duration="9937000" />
     </task>
+    <task id="LOCAL-00001" summary="Lots of work.  Up to HashMap">
+      <created>1644623874228</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1644623874228</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,5 +104,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Lots of work.  Up to HashMap" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lots of work.  Up to HashMap" />
   </component>
 </project>
