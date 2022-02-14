@@ -23,7 +23,9 @@ public class Compressor {
 	
 	final int SYMBOL_LENGTH = 8;
 	HashMap<String, String> symbolCodeMap;
-	HashMap<String, Double> symbolFrequencies;
+	//HashMap<String, Double> symbolFrequencies;
+	HashMap<String, Integer> symbolFrequencies;
+	String finish = "";
 	
 	// The constructor should build a symbol to code map based on the 
 	//  symbol frequencies in the fileContents provided.
@@ -40,7 +42,8 @@ public class Compressor {
 		}
 
 		// create Hashmap for frequency counts
-		Map<String, Integer> map = countFrequencies(list);
+		HashMap<String, Integer> map = countFrequencies(list);
+		//countFrequencies(list);
 
 		//While loop used to look at hashmap.  Not a necessary loop
 		/*Iterator iterator = map.entrySet().iterator();
@@ -53,16 +56,34 @@ public class Compressor {
 
 		Queue<Map.Entry<String,Integer>> queue = new PriorityQueue<>((a, b)-> {return a.getValue()- b.getValue();});
 
+
 		for(Map.Entry<String,Integer> e: map.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
 			System.out.println(e);
 			queue.add(e);
 		}
 
-		System.out.println(" ");
+		/*System.out.println(" ");
 		for(int i = 0; i < map.size(); i++){
 			System.out.println(queue.poll());
+		}*/
+
+		System.out.println("Queue size is " + queue.size());
+
+
+		Map<String, String> code = symbolTable(queue);
+		//symbolTable(queue);
+		System.out.println("code size is " + code.size());
+
+
+		for(Map.Entry<String,String> e: code.entrySet()){
+			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
+			System.out.println(e);
+			finish = finish + e.getValue();
 		}
+
+		printSymbolCodeMap();
+
 
 
 		// Build code tree
@@ -73,10 +94,12 @@ public class Compressor {
 	}
 
 	//Hashmap function to create the hashmap for the ArrayList
-	public static Map<String, Integer> countFrequencies(ArrayList<String> list)
+	//public void countFrequencies(ArrayList<String> list)
+
+	public static HashMap<String, Integer> countFrequencies(ArrayList<String> list)
 	{
 		// hashmap to store the frequency of element
-		Map<String, Integer> map = new HashMap<>();
+		HashMap<String, Integer> map = new HashMap<>();
 		//symbolFrequencies
 
 		for (String sub : list) {
@@ -89,7 +112,26 @@ public class Compressor {
 	
 	//  Prints out each symbol with its code
 	public void printSymbolCodeMap() {
-		
+		System.out.println(finish);
+	}
+
+	public static Map<String, String> symbolTable(Queue<Map.Entry<String,Integer>> queue){
+		//public void symbolTable(Queue<Map.Entry<String,String>> queue){
+
+		Map<String, String> code = new HashMap<>();
+		System.out.println("Queue size is " + queue.size());
+
+		for(int j = 1; j <= queue.size(); j++){
+			int i = j;
+			System.out.println(i + " " + "Queue size is " + queue.size());
+
+			String s = Integer.toBinaryString(i);
+
+			code.put(queue.poll().getKey(),s);
+			//System.out.println(queue.poll());
+
+		}
+		return code;
 	}
 
 	// 
