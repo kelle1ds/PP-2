@@ -1,12 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 public class Compressor {
 
@@ -36,28 +30,37 @@ public class Compressor {
 	// Chunk through the file win lengths of SYMBOL_LENGTH;
 	Compressor(String fileContents) {
 
-		PriorityQueue<HashMap> pQueue = new PriorityQueue<>();
 		ArrayList<String> list = new ArrayList<>();
-
 		int length = fileContents.length();
 		int reminder = length % SYMBOL_LENGTH;  //just in case input is not / 8
 
 		for(int i = 0; i < fileContents.length()-reminder; i = i + SYMBOL_LENGTH){
 
-			//System.out.println(fileContents.substring(i,i+SYMBOL_LENGTH));  //test print
 			list.add(fileContents.substring(i,i+SYMBOL_LENGTH)); //add 8 char substring to list
 		}
 
 		// create Hashmap for frequency counts
-		HashMap map = countFrequencies(list);
+		Map<String, Integer> map = countFrequencies(list);
 
-		//map.entrySet();
+		Queue<Map.Entry<String,Integer>> queue = new PriorityQueue<>((a, b)-> {return a.getValue()- b.getValue();});
 
 		Iterator iterator = map.entrySet().iterator();
-		while (iterator.hasNext()) {
+		while (iterator.hasNext()) {   ///used to print the hashmap
 			Map.Entry me2 = (Map.Entry) iterator.next();
 			System.out.println("Binary value: "+me2.getKey() + " & Frequency: " + me2.getValue());
 		}
+
+		System.out.println("Map size is " + map.size());
+
+		for(Map.Entry<String,Integer> e: map.entrySet()){
+			queue.add(e);
+		}
+
+		System.out.println(" ");
+		for(int i = 0; i < map.size(); i++){
+			System.out.println(queue.poll());
+		}
+
 
 		// Build code tree
 		
@@ -67,22 +70,17 @@ public class Compressor {
 	}
 
 	//Hashmap function to create the hashmap for the ArrayList
-	public static HashMap countFrequencies(ArrayList<String> list)
+	public static Map<String, Integer> countFrequencies(ArrayList<String> list)
 	{
 		// hashmap to store the frequency of element
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Integer> map = new HashMap<>();
+		//symbolFrequencies
 
 		for (String sub : list) {
 			Integer j = map.get(sub);
 			map.put(sub, (j == null) ? 1 : j + 1);
 		}
 
-		// Display frequency while creating.  Remove before submission
-		/*for (HashMap.Entry<String, Integer> val : map.entrySet()) {
-			System.out.println("Element " + val.getKey() + " "
-					+ "occurs"
-					+ ": " + val.getValue() + " times");
-		}*/
 		return map;
 	}
 	
