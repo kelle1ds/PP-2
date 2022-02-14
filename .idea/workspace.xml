@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="">
+    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="More stuff.  Added a final result but it needs some work">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_14_2022_3_18_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_14_2022_3_18_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compressor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +18,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Kelley" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,6 +71,8 @@
       <workItem from="1644869873992" duration="150000" />
       <workItem from="1644870048536" duration="19000" />
       <workItem from="1644870075647" duration="4936000" />
+      <workItem from="1644875902900" duration="12000" />
+      <workItem from="1644875922844" duration="4602000" />
     </task>
     <servers />
   </component>
@@ -97,6 +101,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="More stuff.  Added a final result but it needs some work" />
+    <option name="LAST_COMMIT_MESSAGE" value="More stuff.  Added a final result but it needs some work" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
