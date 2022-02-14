@@ -42,17 +42,20 @@ public class Compressor {
 		// create Hashmap for frequency counts
 		Map<String, Integer> map = countFrequencies(list);
 
-		Queue<Map.Entry<String,Integer>> queue = new PriorityQueue<>((a, b)-> {return a.getValue()- b.getValue();});
-
-		Iterator iterator = map.entrySet().iterator();
+		//While loop used to look at hashmap.  Not a necessary loop
+		/*Iterator iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {   ///used to print the hashmap
 			Map.Entry me2 = (Map.Entry) iterator.next();
 			System.out.println("Binary value: "+me2.getKey() + " & Frequency: " + me2.getValue());
-		}
+		}*/
 
 		System.out.println("Map size is " + map.size());
 
+		Queue<Map.Entry<String,Integer>> queue = new PriorityQueue<>((a, b)-> {return a.getValue()- b.getValue();});
+
 		for(Map.Entry<String,Integer> e: map.entrySet()){
+			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
+			System.out.println(e);
 			queue.add(e);
 		}
 
