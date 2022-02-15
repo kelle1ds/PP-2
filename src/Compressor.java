@@ -18,13 +18,12 @@ public class Compressor {
 		c.printSymbolCodeMap();
 		
 		String compressedFileContents = c.compressFileContents(fileContents);
-		
 	}
 	
 	final int SYMBOL_LENGTH = 8;
 	HashMap<String, String> symbolCodeMap;
 	HashMap<String, Double> symbolFrequencies;
-	//HashMap<String, Integer> symbolFrequencies;
+
 	String finish = "";
 	
 	// The constructor should build a symbol to code map based on the 
@@ -42,35 +41,22 @@ public class Compressor {
 		}
 
 		// create Hashmap for frequency counts
-		//HashMap<String, Integer> map = countFrequencies(list);
 		countFrequencies(list);
-
-		//While loop used to look at hashmap.  Not a necessary loop
-		/*Iterator iterator = map.entrySet().iterator();
-		while (iterator.hasNext()) {   ///used to print the hashmap
-			Map.Entry me2 = (Map.Entry) iterator.next();
-			System.out.println("Binary value: "+me2.getKey() + " & Frequency: " + me2.getValue());
-		}*/
-
-		System.out.println("Map size is " + symbolFrequencies.size());
 
 		PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
 
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			System.out.println(e);
+			//System.out.println(e);
 			queue.add(e);
 		}
 
 
-
-		System.out.println("Queue size is " + queue.size());
-
-
 		//Map<String, Double> code = symbolTable(queue);
 		symbolTable(queue);
-		System.out.println("code size is " + symbolCodeMap.size());
+		//System.out.println("code size is " + symbolCodeMap.size());
 
+		// Build code tree
 
 		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
@@ -78,12 +64,8 @@ public class Compressor {
 			finish = finish + e.getValue();
 		}
 
-
-
-		// Build code tree
-		
+		System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
-		
 		
 	}
 
@@ -93,17 +75,12 @@ public class Compressor {
 	public void countFrequencies(ArrayList<String> list)
 	{
 		// hashmap to store the frequency of element
-		//HashMap<String, Double> map = new HashMap<>();
 		symbolFrequencies = new HashMap<>();
-		//symbolFrequencies
 
 		for (String sub : list) {
 			Double j = symbolFrequencies.get(sub);
 			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1);
 		}
-
-
-		//return map;
 	}
 	
 	//  Prints out each symbol with its code
@@ -121,15 +98,12 @@ public class Compressor {
 
 		for(int j = 1; j < queue.size(); j++){
 			int i = j;
-			System.out.println(i + " " + "Queue size is " + queue.size());
+			//System.out.println(i + " " + "Queue size is " + queue.size());
 
 			String s = Integer.toBinaryString(i);
-
 			symbolCodeMap.put(queue.poll().getKey(),s);
-			//System.out.println(queue.poll());
 
 		}
-		//return code;
 	}
 
 	// 
@@ -141,8 +115,14 @@ public class Compressor {
 	// Using the frequencies of the symbols and lengths of their associated
 	//  codeword, calculate the expected code length per symbol in fileContents
  	public double expectedCodeLengthPerSymbol() {
+		Double sum = 0.0;
+		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
+			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
+			//System.out.println(e);
+			sum = sum + e.getValue();
+		}
  		
- 		return 0;
+ 		return sum/symbolFrequencies.size();
  	}
  	
 }
