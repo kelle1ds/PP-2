@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+
 public class Compressor {
 
 	public static void main(String[] args) {
@@ -41,30 +42,35 @@ public class Compressor {
 		}
 
 		// create Hashmap for frequency counts
+		System.out.println("list size is " + list.size());
 		countFrequencies(list);
 
 		PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
 
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			System.out.println(e);
+			//System.out.println(e);
 			queue.add(e);
 		}
+
 
 
 		//Map<String, Double> code = symbolTable(queue);
 		symbolTable(queue);
 		//System.out.println("code size is " + symbolCodeMap.size());
 
+		PriorityQueue<Tree> minHeap = new PriorityQueue<>();
+
 		// Build code tree
+
 
 		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			//System.out.println(e);
-			finish = finish + e.getValue();
+			System.out.println(e);
+			//finish = finish + e.getValue();
 		}
 
-		System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
+		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
 
 	}
@@ -79,7 +85,13 @@ public class Compressor {
 
 		for (String sub : list) {
 			Double j = symbolFrequencies.get(sub);
-			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1);
+			//System.out.println("j is " + j);
+			//symbolFrequencies.put(sub, (j == null) ? 1 : j + 1);
+			if(j == null){
+				symbolFrequencies.put(sub,1.0/ list.size());
+			} else {
+				symbolFrequencies.put(sub, (j+1.0)/ list.size());
+			}
 		}
 	}
 
@@ -102,7 +114,6 @@ public class Compressor {
 
 			String s = Integer.toBinaryString(i);
 			symbolCodeMap.put(queue.poll().getKey(),s);
-
 		}
 	}
 
