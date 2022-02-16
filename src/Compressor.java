@@ -42,30 +42,32 @@ public class Compressor {
 		}
 
 		// create Hashmap for frequency counts
-		System.out.println("list size is " + list.size());
 		countFrequencies(list);
 
+		//PriorityQueue use for creating codeMap
+		//This queue will be exhausted to create the tree Priority Queue
 		PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
 
+		//PriorityQueue which will serve as the Huffman code
 		PriorityQueue<Tree> treeTree = new PriorityQueue<>();
 
+		//Loop that
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
 			//System.out.println(e);
-			Tree tree = new Tree(e.getKey(),e.getValue());
-			queue.add(e);
-			treeTree.add(tree);
+			Tree tree = new Tree(e.getKey(),e.getValue());  //Node placed in Priority Queue
+			queue.add(e);  //Priority queue used to create symbol table
+			treeTree.add(tree);  //Priority queue used for compression
 		}
 
-
+		System.out.println("Treetree size is " + treeTree.size());
 
 		// Build code tree
-
 		symbolTable(queue);
 
-		printSymbolCodeMap();
+		//testing only.  Commit out please
+		//printQueue(treeTree);
 
-
-		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
+		System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
 
 	}
@@ -81,39 +83,38 @@ public class Compressor {
 		for (String sub : list) {
 			Double j = symbolFrequencies.get(sub);
 			//System.out.println("j is " + j);
-			//symbolFrequencies.put(sub, (j == null) ? 1 : j + 1);
-			if(j == null){
+			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1); //Used for frequency counts
+
+			//Used the following for percentage
+			/*if(j == null){
 				symbolFrequencies.put(sub,1.0/ list.size());
 			} else {
 				symbolFrequencies.put(sub, (j+1.0)/ list.size());
-			}
+			}*/
 		}
 	}
 
 	//  Prints out each symbol with its code
 	public void printSymbolCodeMap() {
-
+		System.out.println("Symbol Table is: ");
 		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
-			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			System.out.println(e);
+			System.out.println("Binary value: "+e.getKey() + " & Code is: " + e.getValue());
+			//System.out.println(e);
 			//finish = finish + e.getValue();
 		}
 	}
 
 	public void symbolTable(Queue<Map.Entry<String,Double>> queue){
-		//public void symbolTable(Queue<Map.Entry<String,String>> queue){
 
-		//Map<String, String> code = new HashMap<>();
 		symbolCodeMap = new HashMap<>();
-		System.out.println("Queue size is " + queue.size());
+		int size = queue.size();
 
-		for(int j = 1; j < queue.size(); j++){
-			int i = j;
-			//System.out.println(i + " " + "Queue size is " + queue.size());
+		for(int j = 1; j <= size; j++){
 
-			String s = Integer.toBinaryString(i);
+			String s = Integer.toBinaryString(j);
 			symbolCodeMap.put(queue.poll().getKey(),s);
 		}
+
 	}
 
 	//
@@ -133,6 +134,18 @@ public class Compressor {
 		}
 
 		return sum/symbolFrequencies.size();
+	}
+
+	//used for testing.  Remove please
+	public void printQueue(PriorityQueue<Tree> treeTree){
+		PriorityQueue<Tree> treeValue = treeTree;
+		PriorityQueue<Tree> treeCode = treeTree;
+		while(!treeValue.isEmpty()){
+			System.out.println("Tree Value is " + treeValue.poll().getValue());
+		}
+		while(!treeCode.isEmpty()){
+			System.out.println("Tree code is " + treeCode.poll().getCode());
+		}
 	}
 
 }
