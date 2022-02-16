@@ -47,28 +47,23 @@ public class Compressor {
 
 		PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
 
+		PriorityQueue<Tree> treeTree = new PriorityQueue<>();
+
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
-			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
 			//System.out.println(e);
+			Tree tree = new Tree(e.getKey(),e.getValue());
 			queue.add(e);
+			treeTree.add(tree);
 		}
 
 
-
-		//Map<String, Double> code = symbolTable(queue);
-		symbolTable(queue);
-		//System.out.println("code size is " + symbolCodeMap.size());
-
-		PriorityQueue<Tree> minHeap = new PriorityQueue<>();
 
 		// Build code tree
 
+		symbolTable(queue);
 
-		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
-			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			System.out.println(e);
-			//finish = finish + e.getValue();
-		}
+		printSymbolCodeMap();
+
 
 		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
@@ -98,7 +93,11 @@ public class Compressor {
 	//  Prints out each symbol with its code
 	public void printSymbolCodeMap() {
 
-		System.out.println(finish);
+		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
+			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
+			System.out.println(e);
+			//finish = finish + e.getValue();
+		}
 	}
 
 	public void symbolTable(Queue<Map.Entry<String,Double>> queue){
