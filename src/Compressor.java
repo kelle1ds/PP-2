@@ -47,7 +47,7 @@ public class Compressor {
 
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
 			//System.out.println("Binary value: "+e.getKey() + " & Frequency: " + e.getValue());
-			//System.out.println(e);
+			System.out.println(e);
 			queue.add(e);
 		}
 

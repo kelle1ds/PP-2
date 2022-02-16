@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="New Branch.  This time I used the Global HashMap">
+    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="more update.  Will soon merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compressor.java" afterDir="false" />
@@ -17,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Kelley" />
+        <entry key="$PROJECT_DIR$" value="More_Stuff" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,6 +72,7 @@
       <workItem from="1644870075647" duration="4936000" />
       <workItem from="1644875902900" duration="12000" />
       <workItem from="1644875922844" duration="7470000" />
+      <workItem from="1645022769324" duration="1536000" />
     </task>
     <task id="LOCAL-00001" summary="New Branch.  This time I used the Global HashMap">
       <created>1644882962330</created>
@@ -80,7 +81,21 @@
       <option name="project" value="LOCAL" />
       <updated>1644882962330</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="more update.  Will soon merge">
+      <created>1644886806167</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1644886806167</updated>
+    </task>
+    <task id="LOCAL-00003" summary="more update.  Will soon merge">
+      <created>1644887056980</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1644887056980</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,7 +127,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="More stuff.  Added a final result but it needs some work" />
     <MESSAGE value="New Branch.  This time I used the Global HashMap" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Branch.  This time I used the Global HashMap" />
+    <MESSAGE value="more update.  Will soon merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="more update.  Will soon merge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
