@@ -51,7 +51,7 @@ public class Compressor {
 		//PriorityQueue which will serve as the Huffman code
 		PriorityQueue<Tree> treeTree = new PriorityQueue<>();
 
-		//Loop that
+		//Loop that creates a tree node for the treeTree PQ and also loads each PQ
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
 			//System.out.println(e);
 			Tree tree = new Tree(e.getKey(),e.getValue());  //Node placed in Priority Queue
@@ -59,13 +59,13 @@ public class Compressor {
 			treeTree.add(tree);  //Priority queue used for compression
 		}
 
-		System.out.println("Treetree size is " + treeTree.size());
+		//System.out.println("Treetree size is " + treeTree.size());
 
 		// Build code tree
 		symbolTable(queue);
 
 		//testing only.  Commit out please
-		//printQueue(treeTree);
+		printQueue(treeTree);
 
 		System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
@@ -85,7 +85,7 @@ public class Compressor {
 			//System.out.println("j is " + j);
 			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1); //Used for frequency counts
 
-			//Used the following for percentage
+			//Used the following for percentage instead of frequency
 			/*if(j == null){
 				symbolFrequencies.put(sub,1.0/ list.size());
 			} else {
@@ -110,7 +110,6 @@ public class Compressor {
 		int size = queue.size();
 
 		for(int j = 1; j <= size; j++){
-
 			String s = Integer.toBinaryString(j);
 			symbolCodeMap.put(queue.poll().getKey(),s);
 		}
@@ -136,15 +135,13 @@ public class Compressor {
 		return sum/symbolFrequencies.size();
 	}
 
-	//used for testing.  Remove please
+	//used for testing the treeTree Priority Queue.  Remove please before submission
 	public void printQueue(PriorityQueue<Tree> treeTree){
 		PriorityQueue<Tree> treeValue = treeTree;
 		PriorityQueue<Tree> treeCode = treeTree;
 		while(!treeValue.isEmpty()){
-			System.out.println("Tree Value is " + treeValue.poll().getValue());
-		}
-		while(!treeCode.isEmpty()){
-			System.out.println("Tree code is " + treeCode.poll().getCode());
+			Tree x = treeValue.poll();
+			System.out.println("Binary is " + x.getCode() + " Frequency value is " + x.getValue());
 		}
 	}
 
