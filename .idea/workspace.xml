@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="Fourth commit">
+    <list default="true" id="c2a82d18-548e-467d-9721-398ad87aad38" name="Changes" comment="Fifth commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/PP2/Compressor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compressor.java" afterDir="false" />
@@ -75,7 +75,7 @@
       <workItem from="1645022769324" duration="1536000" />
       <workItem from="1645025598308" duration="3290000" />
       <workItem from="1645031219139" duration="4056000" />
-      <workItem from="1645049178361" duration="4439000" />
+      <workItem from="1645049178361" duration="5207000" />
     </task>
     <task id="LOCAL-00001" summary="New Branch.  This time I used the Global HashMap">
       <created>1644882962330</created>
@@ -126,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645052647101</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fifth commit">
+      <created>1645053663345</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1645053663345</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,7 +170,8 @@
     <MESSAGE value="Second commit" />
     <MESSAGE value="Third commit" />
     <MESSAGE value="Fourth commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fourth commit" />
+    <MESSAGE value="Fifth commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fifth commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
