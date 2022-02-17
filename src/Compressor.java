@@ -78,17 +78,23 @@ public class Compressor {
 		PriorityQueue<Tree> treeTree3 = new PriorityQueue<>();
 		int size = t.size();
 		while(t.size()>1){
-			Tree left = t.poll();
+			Tree left = t.poll();  //The first node to merge.  It will have a string value of "0"
+			left.setValue("0");  //set string value
 			System.out.println("T is size " + t.size());
-			if(t.isEmpty()){
-				System.out.println("left " + left.getValue() + " right is null");
-				Tree newNode = new Tree(left.getValue());
+			if(t.isEmpty()){  //Just in case there is an odd number of nodes
+				System.out.println("left " + left.getFrequency() + " right is null");
+				Tree newNode = new Tree(left.getFrequency());
+				newNode.setLeft(newNode);
+				newNode.setValue(left.getValue());
 				t.add(newNode);
-			} else
-			{
-				Tree right = t.poll();
-				System.out.println("left " + left.getValue() + " right " + right.getValue());
-				Tree newNode = new Tree(left.getValue() + right.getValue());
+			} else {    //For an even number of nodes with a left and a right merge to form a new node
+				Tree right = t.poll();  //Pull the second node out of the queue
+				right.setValue("1");  //set its string value to "1"
+				System.out.println("left " + left.getFrequency() + " right " + right.getFrequency());
+				Tree newNode = new Tree(left.getFrequency() + right.getFrequency()); //New for merging to
+				newNode.setLeft(left);
+				newNode.setRight(right);
+				newNode.setValue(left.getValue() + right.getValue());
 				t.add(newNode);
 			}
 		}
@@ -162,10 +168,10 @@ public class Compressor {
 	//used for testing the treeTree Priority Queue.  Remove please before submission
 	public void printQueue(PriorityQueue<Tree> treeTree){
 		PriorityQueue<Tree> treeValue = treeTree;
-		PriorityQueue<Tree> treeCode = treeTree;
+		//PriorityQueue<Tree> treeCode = treeTree;
 		while(!treeValue.isEmpty()){
 			Tree x = treeValue.poll();
-			System.out.println("Binary is " + x.getCode() + " Frequency value is " + x.getValue());
+			System.out.println("Binary is " + x.getValue() + " Frequency value is " + x.getFrequency());
 		}
 	}
 
