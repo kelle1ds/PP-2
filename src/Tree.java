@@ -5,12 +5,16 @@ public class Tree implements Comparable<Tree>{
 
     private Double value;
     private String code;
-    private Tree left;
-    private Tree right;
+    private Tree left = null;
+    private Tree right = null;
 
     public Tree(String c, Double v){
         this.value = v;
         this.code = c;
+    }
+
+    public Tree(Double v){
+        this.value = v;
     }
 
     public Double getValue() {

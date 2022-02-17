@@ -16,9 +16,9 @@ public class Compressor {
 		}
 
 		Compressor c = new Compressor(fileContents);
-		c.printSymbolCodeMap();
+		//c.printSymbolCodeMap();
 
-		String compressedFileContents = c.compressFileContents(fileContents);
+		//String compressedFileContents = c.compressFileContents(fileContents);
 	}
 
 	final int SYMBOL_LENGTH = 8;
@@ -64,12 +64,36 @@ public class Compressor {
 		// Build code tree
 		symbolTable(queue);
 
+		PriorityQueue<Tree> freeTree = buildHuffman(treeTree);
 		//testing only.  Commit out please
-		printQueue(treeTree);
+		printQueue(freeTree);
 
-		System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
+
+		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
 
+	}
+
+	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
+		PriorityQueue<Tree> treeTree3 = new PriorityQueue<>();
+		int size = t.size();
+		while(t.size()>1){
+			Tree left = t.poll();
+			System.out.println("T is size " + t.size());
+			if(t.isEmpty()){
+				System.out.println("left " + left.getValue() + " right is null");
+				Tree newNode = new Tree(left.getValue());
+				t.add(newNode);
+			} else
+			{
+				Tree right = t.poll();
+				System.out.println("left " + left.getValue() + " right " + right.getValue());
+				Tree newNode = new Tree(left.getValue() + right.getValue());
+				t.add(newNode);
+			}
+		}
+		System.out.println("Huffman build with size: " + size + " and final size " + t.size());
+		return t;
 	}
 
 	//Hashmap function to create the hashmap for the ArrayList
