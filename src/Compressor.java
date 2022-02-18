@@ -52,73 +52,75 @@ public class Compressor {
 		PriorityQueue<Tree> treeTree = new PriorityQueue<>();
 
 		//Loop that creates a tree node for the treeTree PQ and also loads each PQ
+		//Loop through symbolFrequencies Hashmap to populate queue and treeTree
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
-			//System.out.println(e);
+			//Value in the following constructor is the original binary
 			Tree tree = new Tree(e.getKey(),e.getValue());  //Node placed in Priority Queue
 			queue.add(e);  //Priority queue used to create symbol table
 			treeTree.add(tree);  //Priority queue used for compression
+			//System.out.println("Key is " + e.getKey() + " value is " + e.getValue());
 		}
 
-		//System.out.println("Treetree size is " + treeTree.size());
-
 		// Build code tree
+		// This probably doesn't work like he wants it.  Or maybe it does
 		symbolTable(queue);
 
+		//The following method is for testing only
+		//printQueue(treeTree);
+
 		PriorityQueue<Tree> freeTree = buildHuffman(treeTree);
+
 		//testing only.  Commit out please
 		//printQueue(freeTree);
-		//System.out.println("freeTree size is " + freeTree.size());
 
-		PriorityQueue<Tree> bt = BFS(freeTree.poll());
+		PriorityQueue<Tree> bt = BFS(freeTree);
 
 		System.out.println("BT size is " + bt.size());
 		for(int i = 0; i < bt.size(); i++){
 			System.out.println(bt.poll().getSymbol());
 		}
 
-
 		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
-
 	}
 
-	public PriorityQueue<Tree> BFS(Tree x){
-		PriorityQueue<Tree> queue = new PriorityQueue<Tree>();
-		queue.add(x);
-		while (!queue.isEmpty()) {
+	public PriorityQueue<Tree> BFS(PriorityQueue<Tree> x){
+		PriorityQueue<Tree> bfs = new PriorityQueue<Tree>();
+		bfs.add(x.poll());
+		while (!bfs.isEmpty()) {
 
-				Tree tempNode = queue.poll();
-				System.out.println(tempNode.getSymbol() + " ");
+			Tree tempNode = bfs.poll();
+			//System.out.println(tempNode.getSymbol() + " ");
 
-				/*Enqueue left child */
-				if (tempNode.getLeft() != null) {
-					//System.out.println("getleft " + tempNode.getLeft().getSymbol());
-					queue.add(tempNode.getLeft());
-				}
-
-				/*Enqueue right child */
-				if (tempNode.getRight() != null) {
-					//System.out.println("getRight " + tempNode.getRight().getSymbol());
-					queue.add(tempNode.getRight());
-				}
-
-			if (tempNode.getRight() == null) {
-				System.out.println("tempNode is null");
+			/*Enqueue left child */
+			if (tempNode.getLeft() != null) {
+				tempNode.getLeft().setSymbol("0");
+				System.out.println("getleft " + tempNode.getLeft().getSymbol());
+				bfs.add(tempNode.getLeft());
 			}
+
+			/*Enqueue right child */
+			if (tempNode.getRight() != null) {
+				tempNode.getRight().setSymbol("1");
+				bfs.add(tempNode.getRight());
+				System.out.println("getRight " + tempNode.getRight().getSymbol());
+			}
+
+			//if (tempNode.getRight() == null) {
+			//	System.out.println("tempNode is null");
+			//}
 		}
-		return queue;
+		return bfs;
 	}
 
 	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
-		//PriorityQueue<Tree> treeTree3 = new PriorityQueue<>();
 		int size = t.size(); //used for testing
 
 		//Loop to pop two nodes out of the queue.  First is left and second is right
 		//Execute loop until there is only one node left in queue.
 		while(t.size()>1){   //one poll per loop until we get to 1 node
 			Tree left = t.poll();  //The first node to merge.  Left has a string value of "0"
-			left.setSymbol("0");  //set string value
-			//System.out.println("T is size " + t.size());
+			//left.setSymbol("0");  //set string value
 
 			//Just in case there is an odd number of nodes.  The "if" will only be executed
 			//on the last node of the queue.
@@ -130,9 +132,13 @@ public class Compressor {
 				t.add(newNode);
 			} else {    //For an even number of nodes with a left and a right merge to form a new node
 				Tree right = t.poll();  //Pull the second node out of the queue
-				right.setSymbol("1");  //set Right node string value to "1"
+				//right.setSymbol("1");  //set Right node string value to "1"
+
 				//System.out.println("left freq " + left.getFrequency() + " right freq " + right.getFrequency());
 				Tree newNode = new Tree(left,right); //New Tree object for merging polled nodes
+				//System.out.println("left symbol is " + left.getSymbol());
+				//System.out.println("right symbol is " + right.getSymbol());
+
 				t.add(newNode);  //Add new node to the end of the queue.
 			}
 		}

@@ -5,13 +5,15 @@ public class Tree implements Comparable<Tree>{
 
     private Double frequency;
     private String symbol;
+    private String value;  //original binary value
     private Tree left;
     private Tree right;
 
-    //Constructor for first node)
+    //Constructor for tree nodes in first priority queue
     public Tree(String c, Double v){
         this.frequency = v;
-        this.symbol = c;
+        this.value = c;
+        this.symbol = "";
         left = null;
         right = null;
     }
@@ -72,7 +74,15 @@ public class Tree implements Comparable<Tree>{
     }
 
     public void setSymbol(String value) {
-        this.symbol = symbol;
+        this.symbol = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     //Comparator
