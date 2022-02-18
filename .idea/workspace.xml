@@ -78,7 +78,7 @@
       <workItem from="1645031219139" duration="4056000" />
       <workItem from="1645049178361" duration="6336000" />
       <workItem from="1645098261569" duration="2321000" />
-      <workItem from="1645102397884" duration="1616000" />
+      <workItem from="1645102397884" duration="6738000" />
     </task>
     <task id="LOCAL-00001" summary="New Branch.  This time I used the Global HashMap">
       <created>1644882962330</created>
@@ -150,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645100539646</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Huffman Code">
+      <created>1645104229481</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1645104229481</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

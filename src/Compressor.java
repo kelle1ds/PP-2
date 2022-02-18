@@ -66,7 +66,14 @@ public class Compressor {
 
 		PriorityQueue<Tree> freeTree = buildHuffman(treeTree);
 		//testing only.  Commit out please
-		printQueue(freeTree);
+		//printQueue(freeTree);
+		System.out.println("freeTree size is " + freeTree.size());
+
+		ArrayList<Tree> bt = BFS(freeTree);
+		System.out.println("BT size is " + bt.size());
+		for(int i = 0; i < bt.size(); i++){
+			System.out.println(bt.get(i).getSymbol());
+		}
 
 
 		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
@@ -74,28 +81,48 @@ public class Compressor {
 
 	}
 
+	public ArrayList<Tree> BFS(PriorityQueue<Tree> x){
+		ArrayList<Tree> bt = new ArrayList<>();
+		while(!x.isEmpty()){
+			Tree tempNode = x.poll();
+			System.out.println(tempNode.getSymbol());
+			if(tempNode.getLeft() != null) {
+				bt.add(tempNode.getLeft());
+			}
+			if(tempNode.getRight() != null) {
+				bt.add(tempNode.getRight());
+			}
+
+		}
+		return bt;
+	}
+
 	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
-		PriorityQueue<Tree> treeTree3 = new PriorityQueue<>();
-		int size = t.size();
-		while(t.size()>1){
-			Tree left = t.poll();  //The first node to merge.  It will have a string value of "0"
-			left.setValue("0");  //set string value
-			System.out.println("T is size " + t.size());
-			if(t.isEmpty()){  //Just in case there is an odd number of nodes
+		//PriorityQueue<Tree> treeTree3 = new PriorityQueue<>();
+		int size = t.size(); //used for testing
+
+		//Loop to pop two nodes out of the queue.  First is left and second is right
+		//Execute loop until there is only one node left in queue.
+
+		while(t.size()>1){   //one poll per loop until we get to 1 node
+			Tree left = t.poll();  //The first node to merge.  Left has a string value of "0"
+			left.setSymbol("0");  //set string value
+			//System.out.println("T is size " + t.size());
+
+			//Just in case there is an odd number of nodes.  The "if" will only be executed
+			//on the last node of the queue.
+			if(t.isEmpty()){
 				System.out.println("left " + left.getFrequency() + " right is null");
 				Tree newNode = new Tree(left.getFrequency());
 				newNode.setLeft(newNode);
-				newNode.setValue(left.getValue());
+				newNode.setSymbol(left.getSymbol());
 				t.add(newNode);
 			} else {    //For an even number of nodes with a left and a right merge to form a new node
 				Tree right = t.poll();  //Pull the second node out of the queue
-				right.setValue("1");  //set its string value to "1"
-				System.out.println("left " + left.getFrequency() + " right " + right.getFrequency());
-				Tree newNode = new Tree(left.getFrequency() + right.getFrequency()); //New for merging to
-				newNode.setLeft(left);
-				newNode.setRight(right);
-				newNode.setValue(left.getValue() + right.getValue());
-				t.add(newNode);
+				right.setSymbol("1");  //set Right node string value to "1"
+				System.out.println("left freq " + left.getFrequency() + " right freq " + right.getFrequency());
+				Tree newNode = new Tree(left,right); //New Tree object for merging polled nodes
+				t.add(newNode);  //Add new node to the end of the queue.
 			}
 		}
 		System.out.println("Huffman build with size: " + size + " and final size " + t.size());
@@ -171,7 +198,7 @@ public class Compressor {
 		//PriorityQueue<Tree> treeCode = treeTree;
 		while(!treeValue.isEmpty()){
 			Tree x = treeValue.poll();
-			System.out.println("Binary is " + x.getValue() + " Frequency value is " + x.getFrequency());
+			System.out.println("Binary is " + x.getSymbol() + " Frequency value is " + x.getFrequency());
 		}
 	}
 

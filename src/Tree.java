@@ -4,25 +4,29 @@ import java.util.Map;
 public class Tree implements Comparable<Tree>{
 
     private Double frequency;
-    private String code;
-
-
-    private String value;
-
+    private String symbol;
     private Tree left;
     private Tree right;
 
+    //Constructor for first node)
     public Tree(String c, Double v){
         this.frequency = v;
-        this.code = c;
-        this.value = "";
+        this.symbol = c;
         left = null;
         right = null;
     }
 
-    public Tree(Double v){
+    public Tree(Tree leftSide, Tree rightSide){
+        this.symbol = "";
+        this.frequency = rightSide.getFrequency() + leftSide.getFrequency();
+        left = leftSide;
+        right = rightSide;
+    }
+
+   public Tree(Double v){
+        this.symbol = "";
         this.frequency = v;
-        this.value = "";
+        //this.value = "";
         left = null;
         right = null;
     }
@@ -32,7 +36,7 @@ public class Tree implements Comparable<Tree>{
     }
 
     public String getCode() {
-        return code;
+        return symbol;
     }
 
     public void setFrequency(Double value) {
@@ -40,7 +44,7 @@ public class Tree implements Comparable<Tree>{
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.symbol = code;
     }
 
     public boolean equals(Tree other){
@@ -63,14 +67,13 @@ public class Tree implements Comparable<Tree>{
         this.right = right;
     }
 
-    public String getValue() {
-        return value;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setSymbol(String value) {
+        this.symbol = symbol;
     }
-
 
     //Comparator
     public int compareTo(Tree other){
