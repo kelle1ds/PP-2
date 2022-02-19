@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-
 public class Compressor {
 
 	public static void main(String[] args) {
@@ -16,7 +15,8 @@ public class Compressor {
 		}
 
 		Compressor c = new Compressor(fileContents);
-		//c.printSymbolCodeMap();
+
+		c.printSymbolCodeMap();
 
 		//String compressedFileContents = c.compressFileContents(fileContents);
 	}
@@ -46,7 +46,7 @@ public class Compressor {
 
 		//PriorityQueue use for creating codeMap
 		//This queue will be exhausted to create the tree Priority Queue
-		PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
+		//PriorityQueue<Map.Entry<String,Double>> queue = new PriorityQueue<Map.Entry<String,Double>>((a, b)-> {return Double.compare(a.getValue(), b.getValue());});
 
 		//PriorityQueue which will serve as the Huffman code
 		PriorityQueue<Tree> treeTree = new PriorityQueue<>();
@@ -54,57 +54,59 @@ public class Compressor {
 		//Loop that creates a tree node for the treeTree PQ and also loads each PQ
 		//Loop through symbolFrequencies Hashmap to populate queue and treeTree
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
-			//Value in the following constructor is the original binary
 			Tree tree = new Tree(e.getKey(),e.getValue());  //Node placed in Priority Queue
-			queue.add(e);  //Priority queue used to create symbol table
+			//queue.add(e);  //Priority queue used to create symbol table
 			treeTree.add(tree);  //Priority queue used for compression
-			//System.out.println("Key is " + e.getKey() + " value is " + e.getValue());
 		}
 
 		// Build code tree
 		// This probably doesn't work like he wants it.  Or maybe it does
-		symbolTable(queue);
+		//symbolTable(queue);
 
-		//The following method is for testing only
-		//printQueue(treeTree);
 
+		//Build the Huffman code tree
 		PriorityQueue<Tree> freeTree = buildHuffman(treeTree);
+		BuildLookupTable(freeTree.peek());
+		System.out.println("symboltable size " + symbolCodeMap.size() + " freetree size " + freeTree.size());
 
-		//testing only.  Commit out please
-		//printQueue(freeTree);
 
-		PriorityQueue<Tree> bt = BFS(freeTree);
+		//PriorityQueue<Tree> bt = BFS(freeTree);
 
-		System.out.println("BT size is " + bt.size());
-		for(int i = 0; i < bt.size(); i++){
-			System.out.println(bt.poll().getSymbol());
-		}
+
+		//System.out.println("BT size is " + bt.size());
+		//for(int i = 0; i < bt.size(); i++){
+		//	System.out.println(bt.poll().getSymbol());
+		//}
 
 		//System.out.println("Expected value is " + expectedCodeLengthPerSymbol());
 		// Create encoding map
 	}
 
+
+
 	public PriorityQueue<Tree> BFS(PriorityQueue<Tree> x){
 		PriorityQueue<Tree> bfs = new PriorityQueue<Tree>();
 		bfs.add(x.poll());
+		//System.out.println("bfs is size " + bfs.size());
+		int loops = 0;
 		while (!bfs.isEmpty()) {
-
+			loops++;
 			Tree tempNode = bfs.poll();
-			//System.out.println(tempNode.getSymbol() + " ");
 
-			/*Enqueue left child */
+			//*Enqueue left child *//*
 			if (tempNode.getLeft() != null) {
-				tempNode.getLeft().setSymbol("0");
+				//tempNode.getLeft().setSymbol("0");
 				System.out.println("getleft " + tempNode.getLeft().getSymbol());
 				bfs.add(tempNode.getLeft());
 			}
 
-			/*Enqueue right child */
+			//*Enqueue right child *//*
 			if (tempNode.getRight() != null) {
-				tempNode.getRight().setSymbol("1");
+				//tempNode.getRight().setSymbol("1");
 				bfs.add(tempNode.getRight());
 				System.out.println("getRight " + tempNode.getRight().getSymbol());
 			}
+			System.out.println("bfs is size " + bfs.size() + " loops " + loops);
 
 			//if (tempNode.getRight() == null) {
 			//	System.out.println("tempNode is null");
@@ -113,9 +115,10 @@ public class Compressor {
 		return bfs;
 	}
 
-	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
-		int size = t.size(); //used for testing
 
+	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
+
+		int size = t.size();
 		//Loop to pop two nodes out of the queue.  First is left and second is right
 		//Execute loop until there is only one node left in queue.
 		while(t.size()>1){   //one poll per loop until we get to 1 node
@@ -132,9 +135,6 @@ public class Compressor {
 				t.add(newNode);
 			} else {    //For an even number of nodes with a left and a right merge to form a new node
 				Tree right = t.poll();  //Pull the second node out of the queue
-				//right.setSymbol("1");  //set Right node string value to "1"
-
-				//System.out.println("left freq " + left.getFrequency() + " right freq " + right.getFrequency());
 				Tree newNode = new Tree(left,right); //New Tree object for merging polled nodes
 				//System.out.println("left symbol is " + left.getSymbol());
 				//System.out.println("right symbol is " + right.getSymbol());
@@ -160,11 +160,11 @@ public class Compressor {
 			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1); //Used for frequency counts
 
 			//Used the following for percentage instead of frequency
-			/*if(j == null){
+			if(j == null){
 				symbolFrequencies.put(sub,1.0/ list.size());
 			} else {
 				symbolFrequencies.put(sub, (j+1.0)/ list.size());
-			}*/
+			}
 		}
 	}
 
@@ -173,24 +173,30 @@ public class Compressor {
 		System.out.println("Symbol Table is: ");
 		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
 			System.out.println("Binary value: "+e.getKey() + " & Code is: " + e.getValue());
-			//System.out.println(e);
-			//finish = finish + e.getValue();
+
 		}
 	}
 
-	public void symbolTable(Queue<Map.Entry<String,Double>> queue){
-
+	//Two methods to create the lookup table
+	//First method calls the second method which uses recursion
+	private void BuildLookupTable(Tree root){
+		//final Map<String,String> lookupTable = new HashMap<>();
+		System.out.println("BuildLookupTable root" + root.getValue());
 		symbolCodeMap = new HashMap<>();
-		int size = queue.size();
-
-		for(int j = 1; j <= size; j++){
-			String s = Integer.toBinaryString(j);
-			symbolCodeMap.put(queue.poll().getKey(),s);
-		}
-
+		BuildLookUpTableImpl(root, "");
 	}
 
-	//
+	private void BuildLookUpTableImpl(final Tree node, final String s){
+		if(!node.isLeaf()){
+			BuildLookUpTableImpl(node.getLeft(), s + 'O');
+			BuildLookUpTableImpl(node.getRight(), s + '1');
+		} else {
+
+			symbolCodeMap.put(node.getValue(),s);
+		}
+	}
+
+
 	public String compressFileContents(String fileContents) {
 
 		return null;

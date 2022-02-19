@@ -4,7 +4,7 @@ import java.util.Map;
 public class Tree implements Comparable<Tree>{
 
     private Double frequency;
-    private String symbol;
+    private String symbol;  //"0" or "1"
     private String value;  //original binary value
     private Tree left;
     private Tree right;
@@ -31,6 +31,10 @@ public class Tree implements Comparable<Tree>{
         //this.value = "";
         left = null;
         right = null;
+    }
+
+    boolean isLeaf(){
+        return this.left == null && this.right == null;
     }
 
     public Double getFrequency() {
@@ -99,3 +103,4 @@ public class Tree implements Comparable<Tree>{
     }
 
 }
+
