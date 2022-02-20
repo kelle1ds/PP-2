@@ -2,6 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Compressor Class.
+ * @author kelle1ds
+ *
+ */
 public class Compressor {
 
 	public static void main(String[] args) {
@@ -19,16 +24,22 @@ public class Compressor {
 		String compressedFileContents = c.compressFileContents(fileContents);
 		System.out.println(compressedFileContents);
 		System.out.println("Compressed File length is " + compressedFileContents.length());
-	}
 
+	}
+	//Global Variables in Compressor Class
 	final int SYMBOL_LENGTH = 8;
 	HashMap<String, String> symbolCodeMap;
 	HashMap<String, Double> symbolFrequencies;
 	String finish = "";
 
-	// The constructor should build a symbol to code map based on the
-	//  symbol frequencies in the fileContents provided.
-	// Chunk through the file win lengths of SYMBOL_LENGTH;
+	/**
+	 * Main constructor for class
+	 * Method receives the file contents as one String
+	 * File is streamed into an arraylist 8 char chucks at a time
+	 * @author kelle1ds
+	 * @param fileContents String variable
+	 * @return nothing.
+	 */
 	Compressor(String fileContents) {
 
 		ArrayList<String> list = new ArrayList<>();
@@ -52,10 +63,21 @@ public class Compressor {
 		}
 
 		//Build the Huffman code tree
+		System.out.println("Build Huffman");
+
 		PriorityQueue<Tree> freeTree = buildHuffman(treeTree);
+		System.out.println("Byild lookup");
+
 		BuildLookupTable(freeTree.peek());
+		System.out.println("Print tree " + freeTree.peek().getValue());
 	}
 
+	/**
+	 * Builds the huffman code tree
+	 * @author kelle1ds
+	 * @param t Priority Queue of Tree elements is passed into the method.
+	 * @return t the Priority Queue with only one element.
+	 */
 	public PriorityQueue<Tree> buildHuffman(PriorityQueue<Tree> t){
 
 		int size = t.size();  //used for testing
@@ -71,16 +93,23 @@ public class Compressor {
 		return t;
 	}
 
-	//Hashmap function to create the hashmap for the ArrayList
-	//public void countFrequencies(ArrayList<String> list)
+	/**
+	 * Counts the number of occurences per 8 bit character and stores in symbolFrequences hashmap
+	 * @author kelle1ds
+	 * @param list ArrayList of Strings.
+	 * @return void.
+	 */
 	public void countFrequencies(ArrayList<String> list)
 	{
-		// hashmap to store the frequency of element
+
+
 		symbolFrequencies = new HashMap<>();
 
+		/**
+		 * Loop through the arrayList counting frequencies for each symbol
+		 */
 		for (String sub : list) {
 			Double j = symbolFrequencies.get(sub);
-			//System.out.println("j is " + j);
 			symbolFrequencies.put(sub, (j == null) ? 1 : j + 1); //Used for frequency counts
 
 			//Used the following for percentage instead of frequency
@@ -93,6 +122,7 @@ public class Compressor {
 	}
 
 	//  Prints out each symbol with its code
+
 	public void printSymbolCodeMap() {
 		System.out.println("Symbol Table is: ");
 		for(Map.Entry<String,String> e: symbolCodeMap.entrySet()){
@@ -100,14 +130,27 @@ public class Compressor {
 		}
 	}
 
+
+
 	///////CODE MAP CREATION//////////////
-	//Two methods to create the lookup table
-	//First method calls the second method which uses recursion
+	/**
+	 * Method that builds the Symbol Code Map
+	 * @author kelle1ds
+	 * @param Tree root
+	 * @return void.
+	 */
 	private void BuildLookupTable(Tree root){
 		symbolCodeMap = new HashMap<>();
 		BuildLookUpTableImpl(root, "");
 	}
 
+	/**
+	 * Helper recursive method for BuildLookupTable() method.
+	 * This is a recursive method that walks through the Huffman tree.
+	 * @author kelle1ds
+	 * @param Tree node, String s
+	 * @return void.
+	 */
 	private void BuildLookUpTableImpl(Tree node, String s){
 		if(!node.isLeaf()){
 			BuildLookUpTableImpl(node.getLeft(), s + 'O');
@@ -117,6 +160,13 @@ public class Compressor {
 		}
 	}
 
+	/**
+	 * This method compresses the String 'filecontents'
+	 * Method uses the Symbol Code Map to compress the contents of the string
+	 * @author kelle1ds
+	 * @param String fileContents
+	 * @return void.
+	 */
 	public String compressFileContents(String fileContents) {
 
 		ArrayList<String> list = new ArrayList<>();
@@ -132,8 +182,13 @@ public class Compressor {
 		return compressed;
 	}
 
-	// Using the frequencies of the symbols and lengths of their associated
-	//  codeword, calculate the expected code length per symbol in fileContents
+	/**
+	 * This method calculates the expected lenght of each symbol
+	 * Method uses the Symbol Code Map to compress the contents of the string
+	 * @author kelle1ds
+	 * @param None
+	 * @return double.
+	 */
 	public double expectedCodeLengthPerSymbol() {
 		Double sum = 0.0;
 		for(Map.Entry<String,Double> e: symbolFrequencies.entrySet()){
@@ -145,6 +200,10 @@ public class Compressor {
 
 }
 
+/**
+ * Tree Class.  Class that defines the tree node.
+ * @author kelle1ds
+ */
 class Tree implements Comparable<Tree>{
 	private Double frequency;  //Frequency count
 	private String symbol;  //"0" or "1"
@@ -152,8 +211,12 @@ class Tree implements Comparable<Tree>{
 	private Tree left;
 	private Tree right;
 
-	//Constructor for tree nodes in first priority queue
-
+	/**
+	 * Constructor for tree nodes in first priority queue
+	 * @author kelle1ds
+	 * @param String c, Double v
+	 * @return void.
+	 */
 	public Tree(String c, Double v){
 		this.frequency = v;
 		this.value = c;
@@ -161,79 +224,86 @@ class Tree implements Comparable<Tree>{
 		left = null;
 		right = null;
 	}
-
+	/**
+	 * Constructor for tree nodes in first priority queue
+	 * @author kelle1ds
+	 * @param Tree leftSide, Tree rightSide
+	 * @return void.
+	 */
 	public Tree(Tree leftSide, Tree rightSide){
 		this.symbol = "";
 		this.frequency = rightSide.getFrequency() + leftSide.getFrequency();
 		left = leftSide;
 		right = rightSide;
 	}
-/*
-	public Tree(Double v){
-		this.symbol = "";
-		this.frequency = v;
-		left = null;
-		right = null;
-	}
- */
 
+	/**
+	 * Method used to detect if a Tree node is a leaf.
+	 * A binary tree node's children will be null
+	 * @author kelle1ds
+	 * @param String c, Double v
+	 * @return void.
+	 */
 	boolean isLeaf(){
 		return this.left == null && this.right == null;
 	}
 
+	/**
+	 * gets the frequency value of a Tree node
+	 * @author kelle1ds
+	 * @param none
+	 * @return Double.
+	 */
 	public Double getFrequency() {
 		return frequency;
 	}
 
-	public String getCode() {
-		return symbol;
-	}
-
-	public void setFrequency(Double value) {
-		this.frequency = frequency;
-	}
-
-	public void setCode(String code) {
-		this.symbol = code;
-	}
-
+	/**
+	 * Checks to see if two Tree nodes have the same frequency
+	 * @author kelle1ds
+	 * @param Tree other
+	 * @return boolean.
+	 */
 	public boolean equals(Tree other){
 		return this.getFrequency() == other.getFrequency();
 	}
 
+	/**
+	 * gets the left tree node of a parent
+	 * @author kelle1ds
+	 * @param none
+	 * @return Tree.
+	 */
 	public Tree getLeft() {
 		return left;
 	}
 
-	public void setLeft(Tree left) {
-		this.left = left;
-	}
-
+	/**
+	 * gets the right tree node of a parent
+	 * @author kelle1ds
+	 * @param none
+	 * @return Tree.
+	 */
 	public Tree getRight() {
 		return right;
 	}
 
-	public void setRight(Tree right) {
-		this.right = right;
-	}
-
-	public String getSymbol() {
-		return symbol;
-	}
-
-	public void setSymbol(String value) {
-		this.symbol = value;
-	}
-
+	/**
+	 * gets the original binary string value for a tree nod
+	 * @author kelle1ds
+	 * @param none
+	 * @return String.
+	 */
 	public String getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	//Comparator
+	/**
+	 * Comparator used in Priority Queue
+	 * @author kelle1ds
+	 * @param Tree other
+	 * @return int.
+	 */
 	@Override
 	public int compareTo(Tree other){
 		if(this.equals(other)){
